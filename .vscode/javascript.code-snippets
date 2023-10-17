@@ -1,0 +1,34 @@
+{
+  "SFMC Code Resource boilerplate code": {  
+    "prefix": ["code-resource", "endpoint"],
+    "body": [
+      "Platform.Load('core', '1.1.1')",
+      "",
+      "function sfmcUtils() {",
+      "  // replace with freshly built utils",
+      "}",
+      "",
+      "var method = Platform.Request.Method",
+      "var posted = Platform.Request.GetPostData('utf-8')",
+      "var parsed = Platform.Function.ParseJSON(posted)",
+      "var util = sfmcUtils()",
+      "",
+      "if (method == 'POST') {",
+      "  try {",
+      "    ",
+      "  } catch (error) {",
+      "    ",
+      "  } finally {",
+      "",
+      "  }",
+      "} else {",
+      "  util.serverResponse({",
+      "    Status: 'Error',",
+      "    Message: 'Invalid HTTP method or secret.'",
+      "  })",
+      "}"
+    ],
+    "description": "SFMC Code Resource boilerplate code",
+    "scope": "javascript,typescript"
+  }
+}

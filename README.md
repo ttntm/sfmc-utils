@@ -4,7 +4,7 @@ This is collection of reusable [SSJS](https://developer.salesforce.com/docs/mark
 
 The code should cover most of the use cases that will eventually come up in almost every marketing cloud project.
 
-**Question?**
+**Questions?**
 
 Please use [GitHub Discussions](https://github.com/ttntm/sfmc-utils/discussions).
 

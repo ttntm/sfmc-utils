@@ -440,14 +440,17 @@ function sfmcUtils() {
    */
   function useApexREST(config) {
     if (!config.auth || !config.endpoint || !config.payload || typeof config.payload !== 'object') {
-      throw 'useApexREST: invalid configuration object'
+      return {
+        apx_status: 'Error',
+        apx_message: 'useApexREST: invalid configuration object'
+      }
     }
 
     /**
-      * `Script.Util.HttpRequest` returns the response in a .NET (?) CLR format.
-      * This function makes the response usable for JS.
-      * @returns {object | undefined}
-      */
+     * `Script.Util.HttpRequest` returns the response in a .NET (?) CLR format.
+     * This function makes the response usable for JS.
+     * @returns {object | undefined}
+     */
     function processResponse(res) {
       if (!res || !res.content) {
         return undefined

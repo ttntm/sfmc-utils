@@ -29,7 +29,7 @@ A (project/workspace) scoped snippet based on `code-resource.template.js` can be
 
 # Functional Documentation
 
-The following sections lists the individual untility functions and briefly describes what they do and how to use them.
+This section lists all provided untility functions and offers a brief description for each one of them.
 
 ## [_private](./src/_private.js)
 

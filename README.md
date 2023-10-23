@@ -82,6 +82,19 @@ Helper function for log row generation.
 
 _Object_
 
+## [createSalesforceObject](./src/createSalesforceObject.js)
+
+Used to update a record in an SF CRM object.
+
+### Params
+
+- `type`: _string_ - SF CRM object API name, i.e. "Contact", "ema_CustomObject__c"
+- `props`: _object_ - An object containing the new record's fields and values
+
+### Returns
+
+_Object | `undefined`_
+
 ## [deleteDataExtRow](./src/deleteDataExtRow.js)
 
 This function deletes a row in an SFMC data extension. 

@@ -60,6 +60,41 @@ function sfmcUtils() {
   }
 
   /**
+   * Create a record in an SF CRM object
+   * @param {string} type SF CRM object API name, i.e. 'Contact', 'ema_CustomObject__c'
+   * @param {object} props An object containing the new record's fields and values
+   * @returns {object | undefined}
+   */
+  function createSalesforceObject(type, props) {
+    if (!props || !type) {
+      return undefined
+    }
+
+    var fieldsCount = 0
+    var recordData = []
+
+    for (var key in props) {
+      fieldsCount++
+      recordData.push(key)
+      recordData.push(props[key])
+    }
+
+    var createSFObject = "";
+    createSFObject += "\%\%[";
+    createSFObject += "set @SFCreate = CreateSalesforceObject('" + type + "',";
+    createSFObject += fieldsCount + ",'" + recordData.join("','") + "'";
+    createSFObject += ")";
+    createSFObject += "output(concat(@SFCreate))";
+    createSFObject += "]\%\%";
+
+    var execCreate = Platform.Function.TreatAsContent(createSFObject)
+
+    return execCreate && typeof execCreate === 'string' && execCreate.length === 18
+      ? { id: execCreate }
+      : { error: 'Error creating SF record' }
+  }
+
+  /**
    * Delete a row in an SFMC data extension
    * @param {string} ext Data extensions external key
    * @param {string} pkCol PK column name
@@ -399,7 +434,7 @@ function sfmcUtils() {
     updateSFObject += "\%\%[";
     updateSFObject += "set @SFUpdateResults = UpdateSingleSalesforceObject('" + type + "',";
     updateSFObject += "'" + sfObjId + "','" + updateData.join("','") + "'";
-    updateSFObject += ") ";
+    updateSFObject += ")";
     updateSFObject += "output(concat(@SFUpdateResults))";
     updateSFObject += "]\%\%";
 
@@ -407,7 +442,7 @@ function sfmcUtils() {
 
     return Number(execUpdate) > 0
       ? { success: type + ' updated' }
-      : { error: 'Error updating SF object' }
+      : { error: 'Error updating SF record' }
   }
 
   /**
@@ -536,6 +571,7 @@ function sfmcUtils() {
 
   return {
     createLogRow: createLogRow
+    , createSalesforceObject: createSalesforceObject
     , deleteDataExtRow: deleteDataExtRow
     , getAllRows: getAllRows
     , getRowData: getRowData

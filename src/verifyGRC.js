@@ -1,7 +1,7 @@
 /**
  * Verify a Google ReCaptcha payload.
  * See: https://developers.google.com/recaptcha/docs/verify#api-response
- * @param {string} grcToken 
+ * @param {string} grcToken A ReCaptcha token from the front end
  * @returns {boolean}
  */
 function verifyGRC(grcToken) {
@@ -14,7 +14,7 @@ function verifyGRC(grcToken) {
   
   var res = HTTP.Post(target, 'application/x-www-form-urlencoded', grcPayload)
   
-  if (res.StatusCode == 200) {
+  if (res && res.StatusCode == 200) {
     var parsed = Platform.Function.ParseJSON(res.Response[0])
     return parsed && parsed.success
       ? parsed.success

@@ -8,7 +8,7 @@
  * @returns {object | undefined}
  */
 function getToken(auth, mid) {
-  if (!auth || !auth-client_id || !auth.client_secret) {
+  if (!auth || !auth.client_id || !auth.client_secret) {
     return undefined
   }
 

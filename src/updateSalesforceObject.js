@@ -21,7 +21,7 @@ function updateSalesforceObject(type, sfObjId, props) {
     updateSFObject += "\%\%[";
     updateSFObject += "set @SFUpdateResults = UpdateSingleSalesforceObject('" + type + "',";
     updateSFObject += "'" + sfObjId + "','" + updateData.join("','") + "'";
-    updateSFObject += ") ";
+    updateSFObject += ")";
     updateSFObject += "output(concat(@SFUpdateResults))";
     updateSFObject += "]\%\%";
 
@@ -29,5 +29,5 @@ function updateSalesforceObject(type, sfObjId, props) {
 
   return Number(execUpdate) > 0
     ? { success: type + ' updated' }
-    : { error: 'Error updating SF object' }
+    : { error: 'Error updating SF record' }
 }

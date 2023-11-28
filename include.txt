@@ -16,3 +16,4 @@
 ./src/upsertDataExtRow.js
 ./src/useApexREST.js
 ./src/validateInput.js
+./src/verifyGRC.js

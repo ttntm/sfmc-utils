@@ -364,6 +364,18 @@ Checks and object for existence and value.length > 1 of the specified keys.
 
 _Boolean_
 
+## [verifyGRC](./src/verifyGRC.js)
+
+Verify a Google ReCaptcha payload. See: https://developers.google.com/recaptcha/docs/verify#api-response
+
+### Params
+
+- `grcToken`: _string_ - A ReCaptcha token from the front end
+
+### Returns
+
+_Boolean_
+
 # License
 
 MIT; see [./LICENSE](./LICENSE)

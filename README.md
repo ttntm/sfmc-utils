@@ -370,6 +370,7 @@ Verify a Google ReCaptcha payload. See: https://developers.google.com/recaptcha/
 
 ### Params
 
+- `apiKey`: _string_ - Google API key
 - `grcToken`: _string_ - A ReCaptcha token from the front end
 
 ### Returns

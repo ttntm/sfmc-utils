@@ -152,7 +152,7 @@ Used to obtain an SFMC REST API token via REST API at `/v2/token` (more info: [o
 - `auth`: _object_ - Client id/secret to use for the token request; expects an object of the following type: `{ client_id: string,
 client_secret: string }`
   - _Recommendation: retrieve the credentials from a DE, do not hard-code them in the SSJS code_
-- `mid`: _string?_ - Business unit MID; only included in the token request if available; falls back to private var `utilMID` if empty
+- `mid`: _string | null_ - Business unit MID; only included in the token request if available; falls back to private var `utilMID` if empty
 
 ### Returns
 
@@ -346,8 +346,8 @@ SFDC API result; depends on the endpoint; object, any[], etc.
 ```ts
 {
   apx_status: 'Success' | 'Error'
-  apx_data: object?
-  apx_message: string?
+  apx_data: object | null
+  apx_message: string | null
 }
 ```
 

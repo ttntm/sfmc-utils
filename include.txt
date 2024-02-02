@@ -1,5 +1,6 @@
 ./src/createLogRow.js
 ./src/createSalesforceObject.js
+./src/deleteContactsByKey.js
 ./src/deleteDataExtRow.js
 ./src/getAllRows.js
 ./src/getRowData.js

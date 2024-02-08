@@ -88,12 +88,29 @@ Used to update a record in an SF CRM object.
 
 ### Params
 
-- `type`: _string_ - SF CRM object API name, i.e. "Contact", "ema_CustomObject__c"
+- `type`: _string_ - SF CRM object API name, i.e. "Contact", "ns_CustomObject__c"
 - `props`: _object_ - An object containing the new record's fields and values
 
 ### Returns
 
 _Object | `undefined`_
+
+## [deleteContactsByKey](./src/deleteContactsByKey.js)
+
+Triggers SFMC contact deletion via API.
+
+Docs: [REST Reference](https://developer.salesforce.com/docs/marketing/marketing-cloud/guide/DeleteByContactKeys.html)
+
+Requires valid token data obtained from a [getToken()](./src/getToken.js) call.
+
+### Params
+
+- `tokenData`: _object_ - SFMC REST API token
+- `contactKeys`: _string[]_ - An array of contact keys deletion should be triggered for
+
+### Returns
+
+_Object_ | `undefined`
 
 ## [deleteDataExtRow](./src/deleteDataExtRow.js)
 
@@ -295,7 +312,7 @@ Used to update a record in an SF CRM object.
 
 ### Params
 
-- `type`: _string_ - SF CRM object API name, i.e. "Contact", "ema_CustomObject__c"
+- `type`: _string_ - SF CRM object API name, i.e. "Contact", "ns_CustomObject__c"
 - `sfObjId`: _string_ - SF CRM record id, i.e. 003... for a ContactKey
 - `props`: _object_ - An object containing the fields to update and their new values
 

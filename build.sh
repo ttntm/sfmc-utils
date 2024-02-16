@@ -69,7 +69,7 @@ if [ $# -lt 2 ]; then
   echo '[HELP]';
   echo 'Builds the SFMC Utilities wrapper.';
   echo '  - The correct syntax for this command is '$0 'input_list_file merge_file';
-  echo '  - If there are private variables/methods, `./utils_private.js` should be used';
+  echo '  - If there are private variables/methods, `./src/_private.js` should be used';
   echo '  - The order of the functions can be defined in `include.txt`';
   echo '';
 else

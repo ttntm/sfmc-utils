@@ -12,7 +12,8 @@ function getToken(auth, mid) {
     return undefined
   }
 
-  var authEndpoint = 'https://1234.auth.marketingcloudapis.com/v2/token'
+  // This constant is defined ./_private.js
+  var authEndpoint = AUTH_BASE_SFMC
   var payload = {
     client_id: auth.client_id,
     client_secret: auth.client_secret,

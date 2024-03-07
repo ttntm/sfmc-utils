@@ -37,11 +37,12 @@ function useApexREST(config) {
     return Platform.Function.ParseJSON(resContent)
   }
 
-  var authEndpointCRM = 'https://login.salesforce.com/services/oauth2/token'
+  // This constant is defined ./_private.js
+  var authEndpointCRM = AUTH_BASE_SFDC
   var CA = config.auth
   var tokenStr = '?grant_type=password&client_id=' + CA.client_id + '&client_secret=' + CA.client_secret + '&username=' + CA.username + '&password=' + CA.password
   var tk_url = authEndpointCRM + tokenStr
-  
+
   try {
     // 1. auth call
     var tk_request = new Script.Util.HttpRequest(tk_url)
@@ -50,7 +51,7 @@ function useApexREST(config) {
     tk_request.continueOnError = true
     tk_request.contentType = 'multipart/form-data; charset=utf-8;'
     tk_request.method = 'POST'
-    
+
     var tk_response = tk_request.send()
     var tk_resContent = processResponse(tk_response)
 
@@ -60,7 +61,7 @@ function useApexREST(config) {
     if (!instanceCRM || !tokenCRM) {
       throw 'useApexREST: token error'
     }
-    
+
     // 2. endpoint call
     var apx_url = instanceCRM + config.endpoint
 
@@ -72,7 +73,7 @@ function useApexREST(config) {
     apx_request.setHeader('Authorization', 'Bearer ' + tokenCRM)
     apx_request.method = 'POST'
     apx_request.postData = Stringify(config.payload)
-    
+
     var apx_response = apx_request.send()
     var apx_resContent = processResponse(apx_response)
 

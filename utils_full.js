@@ -1,5 +1,7 @@
 function sfmcUtils() {
   var API = new Script.Util.WSProxy()
+  var AUTH_BASE_SFDC = 'https://login.salesforce.com/services/oauth2/token'
+  var AUTH_BASE_SFMC = 'https://1234.auth.marketingcloudapis.com/v2/token'
   var utilMID = ''
 
   /**
@@ -232,7 +234,8 @@ function sfmcUtils() {
       return undefined
     }
 
-    var authEndpoint = 'https://1234.auth.marketingcloudapis.com/v2/token'
+    // This constant is defined ./_private.js
+    var authEndpoint = AUTH_BASE_SFMC
     var payload = {
       client_id: auth.client_id,
       client_secret: auth.client_secret,
@@ -477,7 +480,7 @@ function sfmcUtils() {
   /**
    * Upsert a row into an SFMC data extension
    * @param {string} ext Data extensions external key
-   * @param {object} data An object containing the data to write into the table 
+   * @param {object} data An object containing the data to write into the table
    * @returns {boolean}
    */
   function upsertDataExtRow(ext, data) {
@@ -523,7 +526,8 @@ function sfmcUtils() {
       return Platform.Function.ParseJSON(resContent)
     }
 
-    var authEndpointCRM = 'https://login.salesforce.com/services/oauth2/token'
+    // This constant is defined ./_private.js
+    var authEndpointCRM = AUTH_BASE_SFDC
     var CA = config.auth
     var tokenStr = '?grant_type=password&client_id=' + CA.client_id + '&client_secret=' + CA.client_secret + '&username=' + CA.username + '&password=' + CA.password
     var tk_url = authEndpointCRM + tokenStr

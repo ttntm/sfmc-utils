@@ -1,4 +1,6 @@
 var API = new Script.Util.WSProxy()
+var AUTH_BASE_SFDC = 'https://login.salesforce.com/services/oauth2/token'
+var AUTH_BASE_SFMC = 'https://1234.auth.marketingcloudapis.com/v2/token'
 var utilMID = ''
 
 /**
@@ -13,7 +15,7 @@ function processDataExtRow(ext, data, upsert) {
   if (!ext || !data) {
     return false
   }
-  
+
   var rowData = {
     CustomerKey: ext,
     Properties: []
@@ -35,12 +37,12 @@ function processDataExtRow(ext, data, upsert) {
         SaveAction: 'UpdateAdd'
       }]
     }
-    
+
     response = API.updateItem('DataExtensionObject', rowData, options)
   } else {
     response = API.createItem('DataExtensionObject', rowData)
   }
-  
+
   // { Status: String, RequestID: String, Results: Array }
   return response && response['Status'] == 'OK'
 }

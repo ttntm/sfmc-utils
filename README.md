@@ -2,7 +2,7 @@
 
 This is collection of reusable [SSJS](https://developer.salesforce.com/docs/marketing/marketing-cloud/guide/ssjs_serverSideJavaScript.html) utility functions for SFMC.
 
-The code should cover most of the use cases that will eventually come up in almost every marketing cloud project.
+The code should cover many use cases that will eventually come up in most marketing cloud projects.
 
 **Questions?**
 
@@ -19,9 +19,9 @@ The default `include.txt` files contains 100% of the utility functions; it can b
 
 `./build.sh include.txt util_full.js`
 
-You can change the files pulled in from `include.txt` at any time, but it's probably better to just create a new file if/when you want to build a smaller version of the library.
+You can change the files pulled in from `include.txt` at any time, but it's probably better to just create a new file when you want to build a smaller version of the library.
 
-When creating a new Code Resource: `code-resource.template.js`, a boilerplate file for HTTP `POST` triggered endpoints, can be found in the root directory.
+When creating a new Code Resource: [code-resource.template.js](./code-resource.template.js), a boilerplate file for HTTP endpoints triggered by `POST` requests, can be found in the root directory.
 
 ## VS Code
 
@@ -47,6 +47,14 @@ Stores an instance of [WSProxy](https://developer.salesforce.com/docs/marketing/
 - `setMID()`
 - `updateAllSubscribersList()`
 
+#### `AUTH_BASE_SFDC`
+
+Used to store the base URL for authenticating with Salesforce CRM.
+
+#### `AUTH_BASE_SFMC`
+
+Used to store the tenant-specific base URL for authenticating with SFMC.
+
 #### `utilMID`
 
 Stores the SFMC Business Unit MID once set using the function `setMID()`.
@@ -55,7 +63,7 @@ Stores the SFMC Business Unit MID once set using the function `setMID()`.
 
 #### `processDataExtRow()`
 
-Private method used to insert/upsert a value into an SFMC data extension. 
+Private method used to insert/upsert a value into an SFMC data extension.
 
 Uses `API.updateItem()` for upsert operations and `API.createItem()` for insert operations.
 
@@ -114,7 +122,7 @@ _Object_ | `undefined`
 
 ## [deleteDataExtRow](./src/deleteDataExtRow.js)
 
-This function deletes a row in an SFMC data extension. 
+This function deletes a row in an SFMC data extension.
 
 The target data extension must have a Primary Key column.
 
@@ -132,7 +140,7 @@ _Boolean_
 
 Get all rows from an SFMC data extension.
 
-Use this one for bigg/er tables - regular lookups have a hard 2000 row limit.
+Use this one for tables with many rows - regular lookups have a hard 2000 row limit.
 
 ### Params
 
@@ -184,7 +192,7 @@ Uses the private method `processDataExtRow()`.
 ### Params
 
 - `ext`: _string_ - Data extensions external key
-- `data`: _object_ - An object containing the data to write into the table 
+- `data`: _object_ - An object containing the data to write into the table
 
 ### Returns
 
@@ -214,10 +222,10 @@ Wraps the AMPScript function `RetrieveSalesforceObjects()` and calls it using `P
 
 ### Params
 
-`objectName`: _string_ - Salesforce object, i.e. 'Account'
-`targetFields`: _string[]_ - SF API names of the fields to retrieve
-`lookupField`: _string_ - Field to use for the lookup, i.e. 'Id'
-`lookupValue`: _string_ - Value to check in `lookupField`
+- `objectName`: _string_ - Salesforce object, i.e. 'Account'
+- `targetFields`: _string[]_ - SF API names of the fields to retrieve
+- `lookupField`: _string_ - Field to use for the lookup, i.e. 'Id'
+- `lookupValue`: _string_ - Value to check in `lookupField`
 
 ### Returns
 

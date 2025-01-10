@@ -37,7 +37,7 @@ This files contains private variables and methods that are not exposed in the ob
 
 ### Variables
 
-#### `api`
+#### `API`
 
 Stores an instance of [WSProxy](https://developer.salesforce.com/docs/marketing/marketing-cloud/guide/ssjs_WSProxy_useSSJS.html) which is used in the following functions:
 

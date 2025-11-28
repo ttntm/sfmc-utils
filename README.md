@@ -92,7 +92,9 @@ _Object_
 
 ## [createSalesforceObject](./src/createSalesforceObject.js)
 
-Used to update a record in an SF CRM object.
+Used to create a new record in an SF CRM object.
+
+Returns an object containing the ID of the newly created record, or an error.
 
 ### Params
 
@@ -101,7 +103,7 @@ Used to update a record in an SF CRM object.
 
 ### Returns
 
-_Object | `undefined`_
+_Object_
 
 ## [deleteContactsByKey](./src/deleteContactsByKey.js)
 

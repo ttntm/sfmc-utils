@@ -331,7 +331,7 @@ function sfmcUtils() {
       var cf = '@crmval' + [i];
       rso += "set " + cf + " = FIELD(@row,'" + targetFields[i] + "')\n";
 
-      if (i !== tfl - 1) {
+      if (i !== tfl-1) {
         responseVars += cf + ",'|',";
       } else {
         responseVars += cf;
@@ -488,7 +488,7 @@ function sfmcUtils() {
   }
 
   /**
-   * Wrapper for SFDC Apex REST usage.
+   * Wrapper for SFDC (Apex) REST API usage.
    * @param {{
    *  auth: {
    *    client_id: string,
@@ -497,20 +497,23 @@ function sfmcUtils() {
    *    password: string
    *  },
    *  endpoint: string,
-   *  payload: object
-   * }} config SFDC configuration object; `payload` must be an object
+   *  endpoint_query?: string,
+   *  method: 'GET' | 'POST',
+   *  payload?: object
+   * }} config SFDC configuration object; `payload` must be an object when `method` === 'POST'
    * @returns {{
    *  apx_status: 'Success' | 'Error',
-   *  apx_data: object?,
-   *  apx_message: string?
+   *  apx_data?: object,
+   *  apx_message?: string
    * }} SFDC API result; depends on the endpoint; object, any[], etc.
    */
   function useApexREST(config) {
-    if (!config.auth || !config.endpoint || !config.payload || typeof config.payload !== 'object') {
-      return {
-        apx_status: 'Error',
-        apx_message: 'useApexREST: invalid configuration object'
-      }
+    if (!config.auth || !config.endpoint || !config.method) {
+      throw 'useApexREST: invalid configuration object'
+    }
+
+    if (config.payload && typeof config.payload !== 'object') {
+      throw 'useApexREST: config.payload is not an object'
     }
 
     /**
@@ -530,6 +533,8 @@ function sfmcUtils() {
     var authEndpointCRM = AUTH_BASE_SFDC
     var CA = config.auth
     var tokenStr = '?grant_type=password&client_id=' + CA.client_id + '&client_secret=' + CA.client_secret + '&username=' + CA.username + '&password=' + CA.password
+    // alternative version, depending on SFDC setup
+    // var tokenStr = '?grant_type=client_credentials&client_id=' + CA.client_id + '&client_secret=' + CA.client_secret
     var tk_url = authEndpointCRM + tokenStr
 
     try {
@@ -543,7 +548,6 @@ function sfmcUtils() {
 
       var tk_response = tk_request.send()
       var tk_resContent = processResponse(tk_response)
-
       var instanceCRM = tk_resContent.instance_url || undefined
       var tokenCRM = tk_resContent.access_token || undefined
 
@@ -554,14 +558,21 @@ function sfmcUtils() {
       // 2. endpoint call
       var apx_url = instanceCRM + config.endpoint
 
+      if (config.endpoint_query) {
+        apx_url += config.endpoint_query
+      }
+
       var apx_request = new Script.Util.HttpRequest(apx_url)
       apx_request.emptyContentHandling = 0
       apx_request.retries = 2
       apx_request.continueOnError = true
       apx_request.contentType = 'application/json; charset=utf-8;'
       apx_request.setHeader('Authorization', 'Bearer ' + tokenCRM)
-      apx_request.method = 'POST'
-      apx_request.postData = Stringify(config.payload)
+      apx_request.method = config.method
+
+      if (config.payload) {
+        apx_request.postData = Stringify(config.payload)
+      }
 
       var apx_response = apx_request.send()
       var apx_resContent = processResponse(apx_response)

@@ -345,9 +345,9 @@ _Boolean_
 
 ## [useApexREST](./src/useApexREST.js)
 
-Wrapper for SFDC Apex REST usage.
+Wrapper for SFDC (Apex) REST API usage.
 
-Can also be used to interact with the Salesforce standard API endpoints.
+Can also be used to interact with the Salesforce standard API endpoints, supports both `GET` and `POST` requests.
 
 ### Params
 
@@ -362,7 +362,9 @@ Can also be used to interact with the Salesforce standard API endpoints.
     password: string
   },
   endpoint: string
-  payload: object
+  endpoint_query?: string
+  method: 'GET' | 'POST'
+  payload?: object
 }
 ```
 
@@ -373,8 +375,8 @@ SFDC API result; depends on the endpoint; object, any[], etc.
 ```ts
 {
   apx_status: 'Success' | 'Error'
-  apx_data: object | null
-  apx_message: string | null
+  apx_data?: object | undefined
+  apx_message?: string | undefined
 }
 ```
 

@@ -6,7 +6,7 @@ The code should cover many use cases that will eventually come up in most market
 
 **Questions?**
 
-Please use [GitHub Discussions](https://github.com/ttntm/sfmc-utils/discussions).
+Explore this library in [DeepWiki](https://deepwiki.com/ttntm/sfmc-utils), or start a [GitHub Discussion](https://github.com/ttntm/sfmc-utils/discussions).
 
 # Usage
 

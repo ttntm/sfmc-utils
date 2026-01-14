@@ -6,7 +6,9 @@ The code should cover many use cases that will eventually come up in most market
 
 **Questions?**
 
-Explore this library in [DeepWiki](https://deepwiki.com/ttntm/sfmc-utils), or start a [GitHub Discussion](https://github.com/ttntm/sfmc-utils/discussions).
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/ttntm/sfmc-utils)
+
+Feel free to start a [GitHub Discussion](https://github.com/ttntm/sfmc-utils/discussions).
 
 # Usage
 

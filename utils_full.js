@@ -65,7 +65,10 @@ function sfmcUtils() {
    * Create a record in an SF CRM object
    * @param {string} type SF CRM object API name, i.e. 'Contact', 'ema_CustomObject__c'
    * @param {object} props An object containing the new record's fields and values
-   * @returns {object | undefined}
+   * @returns {{
+   *  id?: string,
+   *  error?: string
+   * }}
    */
   function createSalesforceObject(type, props) {
     if (!props || !type) {
@@ -89,11 +92,15 @@ function sfmcUtils() {
     createSFObject += "output(concat(@SFCreate))";
     createSFObject += "]\%\%";
 
-    var execCreate = Platform.Function.TreatAsContent(createSFObject)
+    try {
+      var execCreate = Platform.Function.TreatAsContent(createSFObject)
 
-    return execCreate && typeof execCreate === 'string' && execCreate.length === 18
-      ? { id: execCreate }
-      : { error: 'Error creating SF record' }
+      return execCreate && typeof execCreate === 'string' && execCreate.length === 18
+        ? { id: execCreate }
+        : { error: 'Error creating SF record' }
+    } catch (ex) {
+      return { error: ex }
+    }
   }
 
   /**
@@ -342,9 +349,13 @@ function sfmcUtils() {
     rso += "output(Concat(" + responseVars + "))\n";
     rso += "]\%\%";
 
-    var retrieved = Platform.Function.TreatAsContent(rso)
+    try {
+      var retrieved = Platform.Function.TreatAsContent(rso)
 
-    if (retrieved && retrieved.length > 0) {
+      if (!retrieved || retrieved.length <= 0) {
+        throw 'Lookup failed'
+      }
+
       var crmObject = {}
       var responseValues = retrieved.split('|')
 
@@ -356,7 +367,7 @@ function sfmcUtils() {
       }
 
       return crmObject
-    } else {
+    } catch (ex) {
       return undefined
     }
   }
@@ -448,7 +459,10 @@ function sfmcUtils() {
    * @param {string} type SF CRM object API name, i.e. 'Contact', 'ema_CustomObject__c'
    * @param {string} sfObjId SF CRM record id, i.e. 003... ContactKey
    * @param {object} props An object containing the fields to update and their new values
-   * @returns {object | undefined}
+   * @returns {{
+   *  success?: string,
+   *  error?: string
+   * }}
    */
   function updateSalesforceObject(type, sfObjId, props) {
     if (!props || !sfObjId || !type) {
@@ -470,11 +484,15 @@ function sfmcUtils() {
     updateSFObject += "output(concat(@SFUpdateResults))";
     updateSFObject += "]\%\%";
 
-    var execUpdate = Platform.Function.TreatAsContent(updateSFObject)
+    try {
+      var execUpdate = Platform.Function.TreatAsContent(updateSFObject)
 
-    return Number(execUpdate) > 0
-      ? { success: type + ' updated' }
-      : { error: 'Error updating SF record' }
+      return Number(execUpdate) > 0
+        ? { success: type + ' updated' }
+        : { error: 'Error updating SF record' }
+    } catch (ex) {
+      return { error: ex }
+    }
   }
 
   /**

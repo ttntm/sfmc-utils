@@ -105,7 +105,12 @@ Returns an object containing the ID of the newly created record, or an error.
 
 ### Returns
 
-_Object_
+```ts
+{
+  id?: string,
+  error?: string
+}
+```
 
 ## [deleteContactsByKey](./src/deleteContactsByKey.js)
 
@@ -330,7 +335,12 @@ Used to update a record in an SF CRM object.
 
 ### Returns
 
-_Object | `undefined`_
+```ts
+{
+  success?: string,
+  error?: string
+}
+```
 
 ## [upsertDataExtRow](./src/upsertDataExtRow.js)
 

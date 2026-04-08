@@ -2,7 +2,7 @@
  * This code is also available as a VS Code snippet in the `./.vscode/` folder of this repository
  */
 
-Platform.Load('core', '1.1.1')
+Platform.Load('core', '1.1.5')
 
 function sfmcUtils() {
   // replace with freshly built utils
@@ -15,9 +15,9 @@ var util = sfmcUtils()
 
 if (method == 'POST') {
   try {
-    
+
   } catch (error) {
-    
+
   } finally {
 
   }

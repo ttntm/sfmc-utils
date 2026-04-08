@@ -3,7 +3,10 @@
  * @param {string} type SF CRM object API name, i.e. 'Contact', 'ema_CustomObject__c'
  * @param {string} sfObjId SF CRM record id, i.e. 003... ContactKey
  * @param {object} props An object containing the fields to update and their new values
- * @returns {object | undefined}
+ * @returns {{
+ *  success?: string,
+ *  error?: string
+ * }}
  */
 function updateSalesforceObject(type, sfObjId, props) {
   if (!props || !sfObjId || !type) {
@@ -16,18 +19,22 @@ function updateSalesforceObject(type, sfObjId, props) {
     updateData.push(key)
     updateData.push(props[key])
   }
-  
+
   var updateSFObject = "";
-    updateSFObject += "\%\%[";
-    updateSFObject += "set @SFUpdateResults = UpdateSingleSalesforceObject('" + type + "',";
-    updateSFObject += "'" + sfObjId + "','" + updateData.join("','") + "'";
-    updateSFObject += ")";
-    updateSFObject += "output(concat(@SFUpdateResults))";
-    updateSFObject += "]\%\%";
+  updateSFObject += "\%\%[";
+  updateSFObject += "set @SFUpdateResults = UpdateSingleSalesforceObject('" + type + "',";
+  updateSFObject += "'" + sfObjId + "','" + updateData.join("','") + "'";
+  updateSFObject += ")";
+  updateSFObject += "output(concat(@SFUpdateResults))";
+  updateSFObject += "]\%\%";
 
-  var execUpdate = Platform.Function.TreatAsContent(updateSFObject)
+  try {
+    var execUpdate = Platform.Function.TreatAsContent(updateSFObject)
 
-  return Number(execUpdate) > 0
-    ? { success: type + ' updated' }
-    : { error: 'Error updating SF record' }
+    return Number(execUpdate) > 0
+      ? { success: type + ' updated' }
+      : { error: 'Error updating SF record' }
+  } catch (ex) {
+    return { error: ex }
+  }
 }

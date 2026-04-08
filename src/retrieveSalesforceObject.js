@@ -38,9 +38,13 @@ function retrieveSalesforceObject(objectName, targetFields, lookupField, lookupV
   rso += "output(Concat(" + responseVars + "))\n";
   rso += "]\%\%";
 
-  var retrieved = Platform.Function.TreatAsContent(rso)
+  try {
+    var retrieved = Platform.Function.TreatAsContent(rso)
 
-  if (retrieved && retrieved.length > 0) {
+    if (!retrieved || retrieved.length <= 0) {
+      throw 'Lookup failed'
+    }
+
     var crmObject = {}
     var responseValues = retrieved.split('|')
 
@@ -52,7 +56,7 @@ function retrieveSalesforceObject(objectName, targetFields, lookupField, lookupV
     }
 
     return crmObject
-  } else {
+  } catch (ex) {
     return undefined
   }
 }

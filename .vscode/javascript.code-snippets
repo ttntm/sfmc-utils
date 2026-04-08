@@ -1,8 +1,8 @@
 {
-  "SFMC Code Resource boilerplate code": {  
+  "SFMC Code Resource boilerplate code": {
     "prefix": ["code-resource", "endpoint"],
     "body": [
-      "Platform.Load('core', '1.1.1')",
+      "Platform.Load('core', '1.1.5')",
       "",
       "function sfmcUtils() {",
       "  // replace with freshly built utils",

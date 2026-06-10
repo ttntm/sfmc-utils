@@ -225,7 +225,7 @@ _Boolean_
 
 ## [retrieveSalesforceObject](./src/retrieveSalesforceObject.js)
 
-Retrieves the specified fields from a Salesforce object based on a specific field value (i.e. `PersonContactId`).
+Retrieves the specified fields from a Salesforce object.
 
 Wraps the AMPScript function `RetrieveSalesforceObjects()` and calls it using `Platform.Function.TreatAsContent()`.
 
@@ -233,8 +233,8 @@ Wraps the AMPScript function `RetrieveSalesforceObjects()` and calls it using `P
 
 - `objectName`: _string_ - Salesforce object, i.e. 'Account'
 - `targetFields`: _string[]_ - SF API names of the fields to retrieve
-- `lookupField`: _string_ - Field to use for the lookup, i.e. 'Id'
-- `lookupValue`: _string_ - Value to check in `lookupField`
+- `lookupFields`: _string | string[]_ - Query fields for the lookup, supports `AND` operator only (AMPScript limitation)
+- `lookupValues`: _string | string[]_ - Query values for the lookup, supports `AND` operator only (AMPScript limitation)
 
 ### Returns
 

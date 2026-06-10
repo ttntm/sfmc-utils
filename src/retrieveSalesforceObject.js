@@ -1,24 +1,37 @@
 /**
- * Retrieves the specified fields from a Salesforce object based
- * on a specific field value (i.e. Account.Id)
+ * Retrieves the specified fields from a Salesforce object
  * @param {string} objectName Salesforce object, i.e. 'Account'
  * @param {string[]} targetFields SF API names of the fields to retrieve
- * @param {string} lookupField Field to use for the lookup, i.e. 'Id'
- * @param {string} lookupValue Value to check in `lookupField`
+ * @param {string | string[]} lookupFields Query fields for the lookup, supports `AND` operator only (AMPScript limitation)
+ * @param {string | string[]} lookupValues Query values for the lookup, supports `AND` operator only (AMPScript limitation)
  * @returns {object | undefined}
  */
-function retrieveSalesforceObject(objectName, targetFields, lookupField, lookupValue) {
-  if (!objectName || !lookupField || !lookupValue || !targetFields) {
+function retrieveSalesforceObject(objectName, targetFields, lookupFields, lookupValues) {
+  if (!objectName || !lookupFields || !lookupValues || !targetFields) {
     return undefined
   }
 
+  var query = ''
   var responseVars = ''
   var rso = ''
   var tfl = targetFields.length
 
+  if (typeof lookupFields !== 'string') {
+    var tmp = []
+
+    for (var i = 0; i < lookupFields.length; i++) {
+      var condition = "'" + lookupFields[i] + "','=','" + lookupValues[i] + "'"
+      tmp.push(condition)
+    }
+
+    query = tmp.join(',')
+  } else {
+    query = "'" + lookupFields + "','=','" + lookupValues + "'"
+  }
+
   rso += "\%\%[\n";
   rso += "set @crmval = ''\n";
-  rso += "set @rso = RetrieveSalesforceObjects('" + objectName + "','" + targetFields.join(',') + "','" + lookupField + "','=','" + lookupValue + "')\n";
+  rso += "set @rso = RetrieveSalesforceObjects('" + objectName + "','" + targetFields.join(',') + "'," + query + ")\n";
   rso += "set @rc = RowCount(@rso)\n";
   rso += "IF @rc > 0 THEN\n";
   rso += "set @row = ROW(@rso,1)\n";
